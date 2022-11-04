@@ -1,10 +1,24 @@
 <template>
   <view class="scroll-view-container">
-    <!--  左边的可以滚动的scroll-view -->
+    <!--  左边的可以滚动的scroll-view 它里面显示一级分类-->
     <scroll-view scroll-y class="left-scroll-view">
       <view @click="currentIndex = index" v-for="(item,index) in categories" :key="item.cat_id"
             :class="['left-scroll-view-item',currentIndex === index ?'active':'']">
         {{ item.cat_name }}
+      </view>
+    </scroll-view>
+    <!--  右边的二级，三级分类  -->
+    <scroll-view scroll-y class="right-scroll-view">
+      <!--二级标题-->
+      <view v-for="item in level2List" class="cate-lv2-title" :key="item.cat_id">/{{ item.cat_name }}/
+        <!--三级列表-->
+        <view class="cate-lv3-list">
+          <!--三级的每一项-->
+          <view class="cate-lv3-item" v-for="subitem in item.children" :key="subitem.cat_id">
+            <image :src="subitem.cat_icon"></image>
+            <text>{{ subitem.cat_name }}</text>
+          </view>
+        </view>
       </view>
     </scroll-view>
   </view>
@@ -20,6 +34,11 @@ export default {
   },
   onLoad() {
     this.getCategoriesData()
+  },
+  computed: {
+    level2List() {
+      return this.categories[this.currentIndex] && this.categories[this.currentIndex].children
+    }
   },
   methods: {
     async getCategoriesData() {
