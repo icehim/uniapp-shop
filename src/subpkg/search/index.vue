@@ -8,7 +8,7 @@
     <!--  身体部分 条件渲染，有内容渲染列表没有内容渲染搜索历史 -->
 
     <view v-if="searchGoodsList.length > 0" class="sugg-list">
-      <view class="sugg-item" v-for="item in searchGoodsList" :key="item.goods_id">
+      <view class="sugg-item" v-for="item in searchGoodsList" :key="item.goods_id" @click="goToDetail(item.goods_id)">
         <text class="goods-name">{{ item.goods_name }}</text>
       </view>
     </view>
@@ -43,8 +43,15 @@ export default {
       if (status === 200) {
         this.searchGoodsList = message
       }
+    },
+    //跳转到详情页面
+    goToDetail(goods_id) {
+      uni.navigateTo({
+        url: '/subpkg/goods-detail/index?goods_id=' + goods_id
+      })
     }
   }
+
 }
 </script>
 

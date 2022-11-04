@@ -35,6 +35,12 @@
           "style": {
             "navigationBarTitleText": "搜索"
           }
+        },
+        {
+          "path": "goods-detail/index",
+          "style": {
+            "navigationBarTitleText": "商品详情"
+          }
         }
       ]
     }

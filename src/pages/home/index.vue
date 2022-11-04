@@ -4,9 +4,12 @@
     <my-search-bar/>
     <!--轮播图-->
     <swiper indicator-dots autoplay circular :interval="3000">
-      <swiper-item v-for="item in swipers" :key="item.good_id">
-        <image :src="item.image_src"></image>
-      </swiper-item>
+      <navigator :url="'/subpkg/goods-detail/index?goods_id='+item.goods_id" v-for="item in swipers"
+                 :key="item.good_id">
+        <swiper-item>
+          <image :src="item.image_src"></image>
+        </swiper-item>
+      </navigator>
     </swiper>
     <!--菜单数据-->
     <view class="nav-list">
