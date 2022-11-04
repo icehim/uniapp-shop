@@ -1,14 +1,14 @@
 <template>
   <view class="scroll-view-container">
     <!--  左边的可以滚动的scroll-view 它里面显示一级分类-->
-    <scroll-view scroll-y class="left-scroll-view">
+    <scroll-view scroll-y class="left-scroll-view" :style="{height:h+'px'}">
       <view @click="currentIndex = index" v-for="(item,index) in categories" :key="item.cat_id"
             :class="['left-scroll-view-item',currentIndex === index ?'active':'']">
         {{ item.cat_name }}
       </view>
     </scroll-view>
     <!--  右边的二级，三级分类  -->
-    <scroll-view scroll-y class="right-scroll-view">
+    <scroll-view scroll-y class="right-scroll-view" :style="{height:h+'px'}">
       <!--二级标题-->
       <view v-for="item in level2List" class="cate-lv2-title" :key="item.cat_id">/{{ item.cat_name }}/
         <!--三级列表-->
@@ -29,11 +29,16 @@ export default {
   data() {
     return {
       categories: [],// 一级、二级、三级分类数组
-      currentIndex: 0  //选中的索引
+      currentIndex: 0,  //选中的索引
+      h: 0  //scroll-view 的高度
     }
   },
   onLoad() {
     this.getCategoriesData()
+
+    // 获取可以使用的高度
+    const {windowHeight} = uni.getSystemInfoSync()
+    this.h = windowHeight
   },
   computed: {
     level2List() {
