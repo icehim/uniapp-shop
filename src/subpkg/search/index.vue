@@ -21,7 +21,8 @@ export default {
   data() {
     return {
       timer: null,
-      searchGoodsList: []//搜索到的商品列表
+      searchGoodsList: [],//搜索到的商品列表
+      searchHistoryList: []//搜索历史列表
     }
   },
   methods: {
@@ -34,6 +35,8 @@ export default {
     //获取搜索结果
     async getSearchResult(e) {
       if (e.trim().length === 0) return
+      // 保存搜索历史
+      this.saveHistory(e)
       const {meta: {status}, message} = await uni.$request({
         url: 'goods/qsearch',
         data: {
@@ -49,6 +52,17 @@ export default {
       uni.navigateTo({
         url: '/subpkg/goods-detail/index?goods_id=' + goods_id
       })
+    },
+    saveHistory(keyword) {
+      //  去重，就是把数组中之前存在的删掉，下面通过unshift加进去
+      const findIndex = this.searchHistoryList.findIndex(item => item === keyword)
+      if (findIndex > -1) {
+        this.searchHistoryList.splice(findIndex, 1)
+      }
+      //  倒序
+      this.searchHistoryList.unshift(keyword)
+      //  保存到本地
+      uni.setStorageSync('history', this.searchHistoryList)
     }
   }
 
