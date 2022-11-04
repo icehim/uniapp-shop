@@ -41,6 +41,12 @@
           "style": {
             "navigationBarTitleText": "商品详情"
           }
+        },
+        {
+          "path": "goods-list/index",
+          "style": {
+            "navigationBarTitleText": "商品列表"
+          }
         }
       ]
     }

@@ -18,7 +18,7 @@
         <uni-icons type="trash" size="17" @click="clear"/>
       </view>
       <view class="history-list">
-        <uni-tag v-for="item in searchHistoryList" :key="item" :text="item"/>
+        <uni-tag @click="goToList(item)" v-for="item in searchHistoryList" :key="item" :text="item"/>
       </view>
     </view>
   </view>
@@ -78,6 +78,12 @@ export default {
     clear() {
       this.searchHistoryList = []
       uni.setStorageSync('history', [])
+    },
+    //跳转到商品列表
+    goToList(query) {
+      uni.navigateTo({
+        url: '/subpkg/goods-list/index?query=' + query
+      })
     }
   }
 
