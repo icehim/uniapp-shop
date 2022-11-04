@@ -26,6 +26,19 @@
       }
     }
   ],
+  "subPackages": [
+    {
+      "root": "subpkg",
+      "pages": [
+        {
+          "path": "search/index",
+          "style": {
+            "navigationBarTitleText": "搜索"
+          }
+        }
+      ]
+    }
+  ],
   "tabBar": {
     "color": "#040402",
     "selectedColor": "#d82009",

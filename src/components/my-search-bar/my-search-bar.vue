@@ -1,5 +1,5 @@
 <template>
-  <view class="my-search-container">
+  <view class="my-search-container" @click="goToSearch">
     <view class="my-search-box">
       <uni-icons type="search" size="17"/>
       <text class="placeholder">{{ placeholder }}</text>
@@ -13,16 +13,23 @@ export default {
 
   props: {
     placeholder: {
-      type: Number,
+      type: String,
       default: '搜索'
     },
   },
+  methods: {
+    goToSearch() {
+      uni.navigateTo({
+        url: '/subpkg/search/index'
+      })
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .my-search-container {
-  //   background-color: #c00000;
+  background-color: #c00000;
   height: 50px;
   padding: 0 10px;
   display: flex;

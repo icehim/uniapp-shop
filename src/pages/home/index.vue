@@ -1,5 +1,7 @@
 <template>
   <view>
+    <!--使用子组件-->
+    <my-search-bar/>
     <!--轮播图-->
     <swiper indicator-dots autoplay circular :interval="3000">
       <swiper-item v-for="item in swipers" :key="item.good_id">
