@@ -17,6 +17,21 @@
       <view>
         <image class="floor-title" :src="item.floor_title.image_src" model="scaleToFill"></image>
       </view>
+      <!--身体部分-->
+      <view class="floor-img-box">
+        <!--  左边  -->
+        <view>
+          <image :src="item.product_list[0].image_src" :style="{width:item.product_list[0].image_width+'rpx'}"
+                 mode="widthFix"></image>
+        </view>
+        <!--  右边 只显示4个，用v-show来判断条件 -->
+        <view class="right-img-box">
+          <image v-for="(subitem,index) in item.product_list" :src="subitem.image_src" :key="subitem.name"
+                 v-show="index > 0"
+                 :style="{width:subitem.image_width+'rpx'}"
+                 mode="widthFix"></image>
+        </view>
+      </view>
     </view>
   </view>
 </template>
