@@ -12,12 +12,22 @@
         <text class="goods-name">{{ item.goods_name }}</text>
       </view>
     </view>
-    <view v-else>搜索历史</view>
+    <view class="history-box" v-else>
+      <view class="history-title">
+        <text>搜索历史</text>
+        <uni-icons type="trash" size="17" @click="clear"/>
+      </view>
+      <view class="history-list">
+        <uni-tag v-for="item in searchHistoryList" :key="item" :text="item"/>
+      </view>
+    </view>
   </view>
 </template>
 
 <script>
 export default {
+  components: {},
+
   data() {
     return {
       timer: null,
@@ -63,6 +73,11 @@ export default {
       this.searchHistoryList.unshift(keyword)
       //  保存到本地
       uni.setStorageSync('history', this.searchHistoryList)
+    },
+    //  清除搜索历史
+    clear() {
+      this.searchHistoryList = []
+      uni.setStorageSync('history', [])
     }
   }
 
