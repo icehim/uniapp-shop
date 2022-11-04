@@ -17,7 +17,8 @@
           <!--三级列表-->
           <view class="cate-lv3-list">
             <!--三级的每一项-->
-            <view class="cate-lv3-item" v-for="subitem in item.children" :key="subitem.cat_id">
+            <view class="cate-lv3-item" v-for="subitem in item.children" :key="subitem.cat_id"
+                  @click="goToList(subitem.cat_id)">
               <image :src="subitem.cat_icon"></image>
               <text>{{ subitem.cat_name }}</text>
             </view>
@@ -57,6 +58,12 @@ export default {
       if (status === 200) {
         this.categories = message
       }
+    },
+    //跳转到商品列表中去
+    goToList(cid) {
+      uni.navigateTo({
+        url: '/subpkg/goods-list/index?cid=' + cid
+      })
     }
   },
 }

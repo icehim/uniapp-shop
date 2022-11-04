@@ -25,16 +25,16 @@
       <!--身体部分-->
       <view class="floor-img-box">
         <!--  左边  -->
-        <view>
+        <navigator :url="item.product_list[0].navigator_url">
           <image :src="item.product_list[0].image_src" :style="{width:item.product_list[0].image_width+'rpx'}"
                  mode="widthFix"></image>
-        </view>
+        </navigator>
         <!--  右边 只显示4个，用v-show来判断条件 -->
         <view class="right-img-box">
-          <image v-for="(subitem,index) in item.product_list" :src="subitem.image_src" :key="subitem.name"
-                 v-show="index > 0"
-                 :style="{width:subitem.image_width+'rpx'}"
-                 mode="widthFix"></image>
+          <navigator :url="subitem.navigator_url" v-for="(subitem,index) in item.product_list" :key="subitem.name">
+            <image :src="subitem.image_src" v-show="index > 0" :style="{width:subitem.image_width+'rpx'}"
+                   mode="widthFix"></image>
+          </navigator>
         </view>
       </view>
     </view>
@@ -77,6 +77,11 @@ export default {
         url: 'home/floordata',
       })
       if (status === 200) {
+        message.forEach(item => {
+          item.product_list.forEach(subitem => {
+            subitem.navigator_url = '/subpkg/goods-list/index?' + subitem.navigator_url.split('?')[1]
+          })
+        })
         this.floordata = message
       }
     },
