@@ -6,6 +6,18 @@
         <image :src="item.image_src"></image>
       </swiper-item>
     </swiper>
+    <!--菜单数据-->
+    <view class="nav-list">
+      <image v-for="item in catitems" @click="switchTab(item.name)" :key="item.name" :src="item.image_src"
+             class="nav-img" mode="scaleToFill"></image>
+    </view>
+    <!--楼层数据-->
+    <view v-for="item in floordata" :key="item.floor.title.name">
+      <!--头部部分-->
+      <view>
+        <image class="floor-title" :src="item.floor_title.image_src" model="scaleToFill"></image>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -13,11 +25,15 @@
 export default {
   data() {
     return {
-      swipers: []//轮播图数据
+      swipers: [],//轮播图数据
+      catitems: [],//菜单数据
+      floordata: []//楼层数据
     }
   },
   onLoad() {
     this.getSwipersData()
+    this.getCatitemsData()
+    this.getFloorData()
   },
   methods: {
     async getSwipersData() {
@@ -27,6 +43,29 @@ export default {
       if (status === 200) {
         this.swipers = message
       }
+    },
+    async getCatitemsData() {
+      const {message, meta: {status}} = await uni.$request({
+        url: 'home/catitems',
+      })
+      if (status === 200) {
+        this.catitems = message
+      }
+    },
+    async getFloorData() {
+      const {message, meta: {status}} = await uni.$request({
+        url: 'home/floordata',
+      })
+      if (status === 200) {
+        this.floordata = message
+      }
+    },
+    //切换到tab
+    switchTab(name) {
+      if (name !== '分类') return
+      uni.switchTab({
+        url: '/pages/category/index'
+      })
     }
   }
 }
