@@ -87,6 +87,7 @@
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "商城优购",
     "navigationBarBackgroundColor": "#c00000",
-    "backgroundColor": "#c00000"
+    "backgroundColor": "#c00000",
+    "onReachBottomDistance": 200
   }
 }
