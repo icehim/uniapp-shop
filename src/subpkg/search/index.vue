@@ -35,6 +35,9 @@ export default {
       searchHistoryList: []//搜索历史列表
     }
   },
+  onLoad() {
+    this.searchHistoryList = uni.getStorageSync('history') || []
+  },
   methods: {
     input(e) {
       clearTimeout(this.timer)
