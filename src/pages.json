@@ -45,7 +45,8 @@
         {
           "path": "goods-list/index",
           "style": {
-            "navigationBarTitleText": "商品列表"
+            "navigationBarTitleText": "商品列表",
+            "enablePullDownRefresh": true
           }
         }
       ]

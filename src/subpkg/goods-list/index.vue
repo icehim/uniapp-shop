@@ -25,6 +25,7 @@ export default {
     this.getGoodListData()
   },
   onReachBottom() {
+    // 如果正在执行上拉加载更多，则return
     if (this.isLoadingMore) return;
     //判断是否还有下一页数据，如果有则继续执行下面的代码，如果没有则提示并且return
     if (this.goodsList.length >= this.total) {
@@ -38,17 +39,31 @@ export default {
     this.queryObj.pagenum++
     this.getGoodListData()
   },
+  onPullDownRefresh() {
+    //把页码设置为1，并且把数据清空
+    this.queryObj.pagenum = 1
+    this.goodsList = []
+    //重新发请求
+    this.getGoodListData(true)
+  },
+
   methods: {
-    async getGoodListData() {
+    async getGoodListData(isPullDown = false) {
       this.isLoadingMore = true
       const {meta: {status}, message: {goods, total}} = await uni.$request({
         url: 'goods/search',
-        data: this.queryObj
+        data: this.queryObj,
+        isPullDown
       })
       if (status === 200) {
         this.goodsList = [...this.goodsList, ...goods]
         this.total = total
         this.isLoadingMore = false
+
+        //如果是下拉刷新，数据回来，则停止默认的下拉刷新行为
+        if (isPullDown) {
+          uni.stopPullDownRefresh()
+        }
       }
     }
   }
