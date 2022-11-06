@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
+
 export default {
   components: {},
 
@@ -72,6 +74,10 @@ export default {
     this.getGoodsDetailData(options.goods_id)
   },
   methods: {
+    //  方式2
+    //  参数1:模块名,参数2:方法的数组
+    ...mapMutations('cart', ['addToCart']),
+
     async getGoodsDetailData(goods_id) {
       const {meta: {status}, message} = await uni.$request({
         url: 'goods/detail',
@@ -99,10 +105,23 @@ export default {
     },
     buttonClick(e) {
       if (e.content.text === '加入购物车') {
-        console.log('加入购物车')
+
         //  思路
         // 准备好商品对象
+        const goods = {
+          goods_id: this.goods_info.goods_id,
+          goods_name: this.goods_info.goods_name,
+          goods_price: this.goods_info.goods_price,
+          goods_small_logo: this.goods_info.goods_small_logo,
+          goods_number: this.goods_info.goods_number,
+          goods_state: true  //状态，默认选中
+        }
         // 把商品对象存入到vuex
+        //  方式1：直接调用
+        // this.$store.commit('cart/addToCart', goods)
+
+        // 方法2：辅助函数 mapMutations
+        this.addToCart(goods)
       }
     }
   }
