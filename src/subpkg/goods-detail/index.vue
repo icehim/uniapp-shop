@@ -37,11 +37,14 @@
 </template>
 
 <script>
-import {mapMutations} from 'vuex'
+import {mapMutations, mapGetters} from 'vuex'
 
 export default {
   components: {},
 
+  computed: {
+    ...mapGetters('cart', ['getTotal'])
+  },
   data() {
     return {
       goods_info: null, //商品详情数据
@@ -72,6 +75,14 @@ export default {
   },
   onLoad(options) {
     this.getGoodsDetailData(options.goods_id)
+    //给购物车徽标设置总数
+    this.options[1].info = this.getTotal
+  },
+  watch: {
+    getTotal() {
+      //监听到仓库中的值改变之后，重新给徽标赋值
+      this.options[1].info = this.getTotal
+    }
   },
   methods: {
     //  方式2
@@ -122,6 +133,8 @@ export default {
 
         // 方法2：辅助函数 mapMutations
         this.addToCart(goods)
+        // 加完之后再调用一次
+        // this.options[1].info = this.getTotal
       }
     }
   }

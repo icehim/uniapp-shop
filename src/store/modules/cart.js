@@ -3,6 +3,16 @@ export default {
     state: {
         goodsList: uni.getStorageSync('cart') || [] //购物车中的商品列表
     },
+    getters: {
+        // 获取仓库中商品总数
+        getTotal(state) {
+            let total = 0
+            state.goodsList.forEach(item => {
+                total += item.goods_number
+            })
+            return total
+        }
+    },
     mutations: {
         // 加入购物车
         addToCart(state, goods) {
