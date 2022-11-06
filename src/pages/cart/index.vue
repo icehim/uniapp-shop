@@ -10,6 +10,14 @@
         <radio @click.stop="radioChange(goods.goods_id,!goods.goods_state)" color="#c00000"
                :checked="goods.goods_state"></radio>
       </template>
+      <template #number>
+        <!--【小技巧:如果触发时间的本身无法组织默认行为，加一个父节点去处理】-->
+        <view @click.stop="">
+          <!--$event代表change事件本身传递给我们的参数-->
+          <uni-number-box @change="numberChange(goods.goods_id,$event)" v-model="goods.goods_number"
+                          :min="1"/>
+        </view>
+      </template>
     </my-goods>
   </view>
   <view v-else class="empty-cart">
@@ -31,9 +39,12 @@ export default {
     ...mapGetters('cart', ['getGoodsList'])
   },
   methods: {
-    ...mapMutations('cart', ['updateGoodsState']),
+    ...mapMutations('cart', ['updateGoodsState', 'updateGoodsNumber']),
     radioChange(goods_id, goods_state) {
       this.updateGoodsState({goods_id, goods_state})
+    },
+    numberChange(goods_id, goods_number) {
+      this.updateGoodsNumber({goods_id, goods_number})
     }
   }
 }

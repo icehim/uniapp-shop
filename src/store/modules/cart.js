@@ -40,6 +40,15 @@ export default {
             }
             //最后保存到本地
             uni.setStorageSync('cart', state.goodsList)
+        },
+        //更改商品的数量
+        updateGoodsNumber(state, goods) {
+            const findGoods = state.goodsList.find(item => item.goods_id === goods.goods_id)
+            if (findGoods) {
+                findGoods.goods_number = goods.goods_number
+            }
+            //最后保存到本地
+            uni.setStorageSync('cart', state.goodsList)
         }
     }
 }

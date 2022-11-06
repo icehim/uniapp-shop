@@ -6,8 +6,11 @@
     </view>
     <view class="goods-item-right">
       <text class="goods-name">{{ goods.goods_name }}</text>
-      <text class="goods-price">￥{{ goods.goods_price | toFixed }}</text>
+      <view class="goods-price-number">
 
+        <text class="goods-price">￥{{ goods.goods_price | toFixed }}</text>
+        <slot name="number"></slot>
+      </view>
     </view>
   </view>
 </template>
@@ -69,10 +72,17 @@ export default {
       font-size: 13px;
     }
 
-    .goods-price {
-      font-size: 16px;
-      color: #c00000;
+    .goods-price-number {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      .goods-price {
+        font-size: 16px;
+        color: #c00000;
+      }
     }
+
   }
 }
 </style>
