@@ -11,6 +11,10 @@ export default {
                 total += item.goods_number
             })
             return total
+        },
+        //获取仓库中的商品列表
+        getGoodsList(state) {
+            return state.goodsList
         }
     },
     mutations: {
