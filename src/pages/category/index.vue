@@ -30,7 +30,10 @@
 </template>
 
 <script>
+import tabBarBadge from "@/mixins/tabBar-badge";
+
 export default {
+  mixins: [tabBarBadge],
   data() {
     return {
       categories: [],// 一级、二级、三级分类数组

@@ -1,5 +1,5 @@
 <template>
-  <view class="goods-item">
+  <view class="goods-item" @click="goToDetail(goods.goods_id)">
     <view class="goods-item-left">
       <image :src="goods.goods_small_logo || defaultImg" class="goods-pic"></image>
     </view>
@@ -30,7 +30,14 @@ export default {
     toFixed(val) {
       return val.toFixed(2)
     }
-  }
+  },
+  methods: {
+    goToDetail(goods_id) {
+      uni.navigateTo({
+        url: '/subpkg/goods-detail/index?goods_id=' + goods_id
+      })
+    }
+  },
 }
 </script>
 

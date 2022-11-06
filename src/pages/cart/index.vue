@@ -7,7 +7,11 @@
 </template>
 
 <script>
-export default {}
+import tabBarBadge from "@/mixins/tabBar-badge";
+
+export default {
+  mixins: [tabBarBadge],
+}
 </script>
 
 <style scoped>

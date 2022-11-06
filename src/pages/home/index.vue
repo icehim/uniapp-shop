@@ -42,7 +42,10 @@
 </template>
 
 <script>
+import tabBarBadge from "@/mixins/tabBar-badge";
+
 export default {
+  mixins: [tabBarBadge],
   data() {
     return {
       swipers: [],//轮播图数据
