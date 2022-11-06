@@ -7,7 +7,8 @@
     </view>
     <my-goods v-for="goods in getGoodsList" :key="goods.goods_id" :goods="goods">
       <template #radio>
-        <radio color="#c00000" :checked="goods.goods_state"></radio>
+        <radio @click.stop="radioChange(goods.goods_id,!goods.goods_state)" color="#c00000"
+               :checked="goods.goods_state"></radio>
       </template>
     </my-goods>
   </view>
@@ -21,14 +22,19 @@
 <script>
 import tabBarBadge from "@/mixins/tabBar-badge";
 // mapGetter是跟computed映射的，mapMutations、mapActions是跟methods映射的
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 
 export default {
-  components: {},
 
   mixins: [tabBarBadge],
   computed: {
     ...mapGetters('cart', ['getGoodsList'])
+  },
+  methods: {
+    ...mapMutations('cart', ['updateGoodsState']),
+    radioChange(goods_id, goods_state) {
+      this.updateGoodsState({goods_id, goods_state})
+    }
   }
 }
 </script>

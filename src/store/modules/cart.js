@@ -21,7 +21,6 @@ export default {
         // 加入购物车
         addToCart(state, goods) {
             //  todo add
-            console.log('----cart----', goods)
             const findGoods = state.goodsList.find(item => item.goods_id === goods.goods_id)
             // 如果存在则商品数量累加
             if (findGoods) {
@@ -29,6 +28,15 @@ export default {
             } else {
                 // 不存在则push
                 state.goodsList.push(goods)
+            }
+            //最后保存到本地
+            uni.setStorageSync('cart', state.goodsList)
+        },
+        //更改商品选中状态
+        updateGoodsState(state, goods) {
+            const findGoods = state.goodsList.find(item => item.goods_id === goods.goods_id)
+            if (findGoods) {
+                findGoods.goods_state = goods.goods_state
             }
             //最后保存到本地
             uni.setStorageSync('cart', state.goodsList)
