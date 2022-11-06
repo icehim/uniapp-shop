@@ -46,7 +46,7 @@ export default {
     //重新发请求
     this.getGoodListData(true)
   },
-
+  
   methods: {
     async getGoodListData(isPullDown = false) {
       this.isLoadingMore = true

@@ -5,7 +5,11 @@
       </uni-icons>
       <text class="cart-title-text">购物车</text>
     </view>
-    <my-goods v-for="goods in getGoodsList" :key="goods.goods_id" :goods="goods"></my-goods>
+    <my-goods v-for="goods in getGoodsList" :key="goods.goods_id" :goods="goods">
+      <template #radio>
+        <radio color="#c00000" :checked="goods.goods_state"></radio>
+      </template>
+    </my-goods>
   </view>
   <view v-else class="empty-cart">
     <image class="empty-img" src="/static/cart_empty@2x.png">

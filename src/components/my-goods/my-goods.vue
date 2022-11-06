@@ -1,6 +1,7 @@
 <template>
   <view class="goods-item" @click="goToDetail(goods.goods_id)">
     <view class="goods-item-left">
+      <slot name="radio"/>
       <image :src="goods.goods_small_logo || defaultImg" class="goods-pic"></image>
     </view>
     <view class="goods-item-right">
@@ -49,6 +50,8 @@ export default {
 
   .goods-item-left {
     margin-right: 5px;
+    display: flex;
+    align-items: center;
 
     .goods-pic {
       width: 100px;
