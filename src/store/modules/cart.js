@@ -49,6 +49,12 @@ export default {
             }
             //最后保存到本地
             uni.setStorageSync('cart', state.goodsList)
+        },
+        //根据id删除商品
+        deleteGoodsById(state, goods_id) {
+            state.goodsList = state.goodsList.filter(item => item.goods_id !== goods_id)
+            //最后保存到本地
+            uni.setStorageSync('cart', state.goodsList)
         }
     }
 }
