@@ -30,7 +30,7 @@ export default {
                     amount += item.goods_number * item.goods_price
                 }
             })
-            return amount
+            return amount.toFixed(2)
         },
         //获取仓库中的商品列表
         getGoodsList(state) {
@@ -73,6 +73,14 @@ export default {
         //根据id删除商品
         deleteGoodsById(state, goods_id) {
             state.goodsList = state.goodsList.filter(item => item.goods_id !== goods_id)
+            //最后保存到本地
+            uni.setStorageSync('cart', state.goodsList)
+        },
+        //更改所有商品的状态
+        updateAllGoodsState(state, goods_state) {
+            state.goodsList.forEach(item => {
+                item.goods_state = goods_state
+            })
             //最后保存到本地
             uni.setStorageSync('cart', state.goodsList)
         }

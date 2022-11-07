@@ -1,11 +1,11 @@
 <template>
   <view class="my-settle-container">
-    <view class="radio">
+    <view class="radio" @click="toggleSelect">
       <radio color="#c00000" :checked="isAllCheck"/>
       全选
     </view>
     <view>
-      金额:
+      合计:
       <text class="amount">￥{{ getSelectedAmount }}</text>
     </view>
     <view class="btn-settle">
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 
 export default {
   name: "my-settle",
@@ -24,7 +24,14 @@ export default {
     isAllCheck() {
       return this.getTotal === this.getSelectedTotal
     }
-  }
+  },
+  methods: {
+    ...mapMutations('cart', ['updateAllGoodsState']),
+    //全选或者反选
+    toggleSelect() {
+      this.updateAllGoodsState(!this.isAllCheck)
+    }
+  },
 }
 </script>
 
