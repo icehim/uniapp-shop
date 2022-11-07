@@ -12,6 +12,26 @@ export default {
             })
             return total
         },
+        //获取选中数量
+        getSelectedTotal(state) {
+            let total = 0
+            state.goodsList.forEach(item => {
+                if (item.goods_state) {
+                    total += item.goods_number
+                }
+            })
+            return total
+        },
+        //获取选中金额
+        getSelectedAmount(state) {
+            let amount = 0
+            state.goodsList.forEach(item => {
+                if (item.goods_state) {
+                    amount += item.goods_number * item.goods_price
+                }
+            })
+            return amount
+        },
         //获取仓库中的商品列表
         getGoodsList(state) {
             return state.goodsList

@@ -25,6 +25,7 @@
         </my-goods>
       </uni-swipe-action-item>
     </uni-swipe-action>
+    <my-settle></my-settle>
   </view>
   <view v-else class="empty-cart">
     <image class="empty-img" src="/static/cart_empty@2x.png">
