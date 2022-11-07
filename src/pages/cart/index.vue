@@ -1,5 +1,6 @@
 <template>
   <view v-if="getGoodsList.length>0" class="cart-container">
+    <my-address/>
     <view class="cart-title">
       <uni-icons type="shop" size="17">
       </uni-icons>
@@ -38,6 +39,8 @@ import tabBarBadge from "@/mixins/tabBar-badge";
 import {mapGetters, mapMutations} from "vuex";
 
 export default {
+  components: {},
+
 
   mixins: [tabBarBadge],
   data() {
