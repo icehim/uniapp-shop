@@ -3,7 +3,8 @@ export default {
     state: {
         address: uni.getStorageSync('address'),//收货地址
         token: uni.getStorageSync('token'),//token
-        redirectInfo: null//记录登陆成功之后，跳转到哪里去
+        userInfo: uni.getStorageSync('userInfo'),//用户信息
+        redirectInfo: null,//记录登陆成功之后，跳转到哪里去
     },
     getters: {
         getAddress(state) {
@@ -15,8 +16,11 @@ export default {
         getToken(state) {
             return state.token
         },
-        getRedirectInfo(stete) {
-            return stete.redirectInfo
+        getRedirectInfo(state) {
+            return state.redirectInfo
+        },
+        getUserInfo(state) {
+            return state.userInfo
         }
     },
     mutations: {
@@ -33,7 +37,12 @@ export default {
         setRedirectInfo(state, redirectInfo) {
             state.redirectInfo = redirectInfo
             // 保存在本地
-            uni.setStorageSync('redirectInfo', redirectInfo)
+            // uni.setStorageSync('redirectInfo', redirectInfo)
+        },
+        setUserInfo(state, userInfo) {
+            state.userInfo = userInfo
+            // 保存在本地
+            uni.setStorageSync('userInfo', userInfo)
         }
     }
 }

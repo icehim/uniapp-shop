@@ -1,14 +1,46 @@
 <template>
   <view class="login-container">
     <uni-icons type="contact-filled" color="#AFAFAF" size="100"></uni-icons>
-    <button class="btn-login">一键登录</button>
+    <button class="btn-login" @click="wxLogin">一键登录</button>
     <text class="tip-text">登录后尽享更多权益</text>
   </view>
 </template>
 
 <script>
+import {mapGetters, mapMutations} from "vuex";
+
 export default {
-  name: "my-login"
+  onLoad() {
+
+  },
+  computed: {
+    ...mapGetters('user', ['getRedirectInfo'])
+  },
+  methods: {
+    ...mapMutations('user', ['setUserInfo']),
+    async wxLogin() {
+      //获取后代所需的参数，需要调用uni的两个API，一个是获取用户信息，一个是wx.login
+      const [err, res] = await uni.getUserProfile({
+        desc: '为了更好的为您服务~'
+      })
+      if (err) return
+      console.log(res)
+
+      //  获取后台所需的参数
+      const {encryptedData, iv, rawData, signature} = res
+
+      // 保存用户信息
+      this.setUserInfo(res.userInfo)
+
+      //获取code值
+      const [, {code}] = await uni.login()
+
+      // 发请求，进行微信授权登录，一级登录之后的处理
+      // const res2 = await uni.$request({
+      //
+      // })
+    }
+  }
 }
 </script>
 
