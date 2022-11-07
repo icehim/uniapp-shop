@@ -1,16 +1,20 @@
 <template>
   <view>
-    <text>
-      我的
-    </text>
+    <my-login v-if="!getToken"/>
+
+    <my-userinfo v-else/>
   </view>
 </template>
 
 <script>
-import tabBarBadge from "@/mixins/tabBar-badge";
+import {mapGetters} from "vuex";
 
 export default {
-  mixins: [tabBarBadge],
+  components: {},
+
+  computed: {
+    ...mapGetters('user', ['getToken'])
+  }
 }
 </script>
 
