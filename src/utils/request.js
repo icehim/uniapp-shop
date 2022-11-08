@@ -15,8 +15,8 @@ const request = ({url, method = 'GET', header = {}, data = {}, tip = '拼命加�
         }
 
         // 携带token
-        // const token = store.getters['user/getToken']
-        const token = 'Bearer eyJhbGciOiJIUzl1NilsInR5cCI6lkpXVCJ9.eyJ1aWQiOjUOLCJpYXQiOjE2NDI4MjAONjcslmV4cCI6MTAwMTYOMjgyMDQ2Nn0.euo_T0z46njSNZdEInVx-4IDPhl4oibXMR2gaxoHQwY'
+        const token = store.getters['user/getToken']
+        // const token = 'Bearer eyJhbGciOiJIUzl1NilsInR5cCI6lkpXVCJ9.eyJ1aWQiOjUOLCJpYXQiOjE2NDI4MjAONjcslmV4cCI6MTAwMTYOMjgyMDQ2Nn0.euo_T0z46njSNZdEInVx-4IDPhl4oibXMR2gaxoHQwY'
 
         if (token) {
             header.Authorization = token
