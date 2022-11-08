@@ -10,21 +10,20 @@
 import {mapGetters, mapMutations} from "vuex";
 
 export default {
-  onLoad() {
-
-  },
+  // async onLoad() {
+  //   await uni.login()
+  // },
   computed: {
     ...mapGetters('user', ['getRedirectInfo'])
   },
   methods: {
-    ...mapMutations('user', ['setUserInfo']),
+    ...mapMutations('user', ['setUserInfo', 'setToken']),
     async wxLogin() {
       //获取后代所需的参数，需要调用uni的两个API，一个是获取用户信息，一个是wx.login
       const [err, res] = await uni.getUserProfile({
         desc: '为了更好的为您服务~'
       })
       if (err) return
-      console.log(res)
 
       //  获取后台所需的参数
       const {encryptedData, iv, rawData, signature} = res
@@ -35,10 +34,34 @@ export default {
       //获取code值
       const [, {code}] = await uni.login()
 
+      setTimeout(() => {
+        this.setToken('aaabbbqwe')
+      }, 1000)
+
       // 发请求，进行微信授权登录，一级登录之后的处理
-      // const res2 = await uni.$request({
-      //
+      // const {meta: {status}, message} = await uni.$request({
+      //   url: 'users/wxlogin',
+      //   method: 'POST',
+      //   data: {encryptedData, iv, rawData, signature, code}
       // })
+      // if (status === 200) {
+      //   //保存token
+      //   this.setToken(message.token)
+      //   // 如果有来源页面，跳转来源页面
+      //   uni.showToast({
+      //     title: '登录成功~',
+      //     duration: 1000,
+      //     success: () => {
+      //       setTimeout(() => {
+      //         if (this.getRedirectInfo) {
+      //           uni.switchTab({
+      //             url: this.getRedirectInfo
+      //           })
+      //         }
+      //       }, 1000)
+      //     }
+      //   })
+      // }
     }
   }
 }
