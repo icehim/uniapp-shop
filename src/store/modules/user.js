@@ -44,5 +44,18 @@ export default {
             // 保存在本地
             uni.setStorageSync('userInfo', userInfo)
         }
+    },
+    actions: {
+        logout({commit}) {
+            //模拟发送请求给后台，告知后台前端要退出，
+            setTimeout(() => {
+                //清除token
+                //同一个模块下不需要写模块名
+                commit('setToken', null)
+                //清除vuex中的用户信息
+                commit('setUserInfo', null)
+                // 跳转到登录页面
+            }, 500)
+        }
     }
 }

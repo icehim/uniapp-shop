@@ -57,7 +57,7 @@
           <text>联系客服</text>
           <uni-icons type="arrowright" size="17"/>
         </view>
-        <view class="panel-list-item">
+        <view class="panel-list-item" @click="onLogout">
           <text>退出登录</text>
           <uni-icons type="arrowright" size="17"/>
         </view>
@@ -67,14 +67,31 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations, mapActions} from "vuex";
 
 export default {
   components: {},
 
   computed: {
     ...mapGetters('user', ['getUserInfo'])
-  }
+  },
+  methods: {
+    ...mapActions('user', ['logout']),
+    onLogout() {
+      uni.showModal({
+        title: '提示',
+        content: '确定退出吗?',
+        confirmColor: '#c00000',
+        success: res => {
+          if (res.confirm) {
+            this.logout()
+          } else if (res.cancel) {
+            console.log('取消')
+          }
+        }
+      })
+    }
+  },
 }
 </script>
 
