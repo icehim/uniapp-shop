@@ -1,3 +1,5 @@
+import store from "@/store";
+
 const BASE_URL = 'https://api-hmugo-web.itheima.net/api/public/v1/'
 
 /*
@@ -10,6 +12,14 @@ const request = ({url, method = 'GET', header = {}, data = {}, tip = '拼命加�
                 title: tip,
                 mask: true
             })
+        }
+
+        // 携带token
+        // const token = store.getters['user/getToken']
+        const token = 'Bearer eyJhbGciOiJIUzl1NilsInR5cCI6lkpXVCJ9.eyJ1aWQiOjUOLCJpYXQiOjE2NDI4MjAONjcslmV4cCI6MTAwMTYOMjgyMDQ2Nn0.euo_T0z46njSNZdEInVx-4IDPhl4oibXMR2gaxoHQwY'
+
+        if (token) {
+            header.Authorization = token
         }
 
         uni.request({

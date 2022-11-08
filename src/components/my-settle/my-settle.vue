@@ -26,8 +26,8 @@ export default {
   },
   name: "my-settle",
   computed: {
-    ...mapGetters('cart', ['getTotal', 'getSelectedTotal', 'getSelectedAmount']),
-    ...mapGetters('user', ['getAddress', 'getToken']),
+    ...mapGetters('cart', ['getTotal', 'getSelectedTotal', 'getSelectedAmount', 'getGoodsList']),
+    ...mapGetters('user', ['getAddress', 'getToken', 'addressStr']),
     isAllCheck() {
       return this.getTotal === this.getSelectedTotal
     }
@@ -89,8 +89,82 @@ export default {
             duration: 1000
           })
         }, 1000)
+        return;
       }
-      // 下单和结算
+      //下单和支付
+      this.orderAndPay()
+    },
+    //下单和支付
+    async orderAndPay() {
+      /*
+      * 1.下单
+      *   1.1准备好下单所需要的参数
+      * */
+      const params = {
+        order_price: this.getSelectedAmount,
+        consignee_addr: `${this.addressStr} ${this.getAddress.userName} ${this.getAddress.telNumber}`,
+        goods: this.getGoodsList.filter(item => item.goods_state).map(item => {
+          return {
+            goods_id: item.goods_id,
+            goods_number: item.goods_number,
+            goods_price: item.goods_price
+          }
+        })
+      }
+
+      //1.2发请求创建订单
+      const {meta: {status}, message} = await uni.$request({
+        url: 'my/order/create',
+        method: 'POST',
+        data: params
+      })
+      if (status !== 200) return
+      // 取出order_number
+      const {order_number} = message
+      // 2.支付
+      // 2.1获取uni.requestPayment所需的五个参数
+      const {meta: {status: status2}, message: message2} = await uni.request({
+        url: 'my/order/req_unifiedorder',
+        method: 'POST',
+        data: {
+          order_number
+        }
+      })
+      if (status2 !== 200) return
+
+      //2.2调用uni.requestPayment弹出支付框
+      uni.requestPayment({
+        ...message2.pay,
+        success: async res => {
+          //告诉后台，小程序端已经支付成功，把后后台订单状态改为已支付
+          const {meta: {status: status3}, message: message3} = await uni.$request({
+            url: 'my/orders/chkOrder',
+            method: 'POST',
+            data: {
+              order_number
+            }
+          })
+          if (status3 !== 200) return
+          uni.showToast({
+            title: message3,
+            duration: 800
+          })
+        },
+        fail: ({errMsg}) => {
+          // 取消
+          let message = ''
+          if (errMsg === 'requestPayment:fail cancel') {
+            message = '您取消了支付'
+          } else {//其他错误
+            message = '支付失败请重试'
+          }
+          uni.showToast({
+            title: message,
+            icon: 'error',
+            duration: 800
+          })
+        }
+      })
     }
   },
 }
